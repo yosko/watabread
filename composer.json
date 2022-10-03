@@ -1,0 +1,32 @@
+{
+    "name": "yosko/watabread",
+    "description": "overlay for Watamelo to handle BREAD operations on all MVC layers",
+    "type": "library",
+    "require": {
+        "yosko/watamelo": "dev-master",
+        "yosko/sql-generator": "dev-main"
+    },
+    "require-dev": {
+        "yosko/easydump": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yosko\\WataBread\\": "src/"
+        }
+    },
+    "license": "LGPL",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/yosko/watamelo.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/yosko/easydump.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/yosko/sql-generator.git"
+        }
+    ]
+}
