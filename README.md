@@ -24,8 +24,8 @@ WataBread is composed of two parts:
 This one can be used alone.
 
 To use it:
-* your managers should inherit ```\WataBread\BreadManager``` instead of ```\Watamelo\Manager```
-* your entities (models) should inherit ```\WataBread\BreadModel``` (no equivalent in Watamelo)
+* your managers should inherit ```\Yosko\WataBread\BreadManager``` instead of ```\Yosko\Watamelo\Manager```
+* your entities (models) should inherit ```\Yosko\WataBread\BreadModel``` (no equivalent in Watamelo)
 * you must configure your models and managers
 
 Once done, you will be able to use BREAD operations on your managers.
@@ -36,7 +36,7 @@ TODO: detail configuration and possible uses.
 This one can only be used if the model overlay is also configured.
 
 To use it:
-* your application should inherit ```\WataBread\BreadApplication``` instead of ```\Watamelo\AbstractApplication```
+* your application should inherit ```\Yosko\WataBread\BreadApplication``` instead of ```\Yosko\Watamelo\AbstractApplication```
 * you must add all the necessary routes to BreadController:
 
 ```xml
@@ -50,7 +50,7 @@ To use it:
     <route path="data/:string|model:/add" controller="Bread" action="form"/>
 ```
 
-```\WataBread\BreadController```, ```\WataBread\BreadView``` and all templates in ```src/tpl/``` will then be used to generate views for all BREAD operations on your entities.
+```\Yosko\WataBread\BreadController```, ```\Yosko\WataBread\BreadView``` and all templates in ```src/tpl/``` will then be used to generate views for all BREAD operations on your entities.
 
 ## Dependancies
 
