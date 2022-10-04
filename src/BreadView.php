@@ -3,8 +3,8 @@
 namespace Yosko\WataBread;
 
 use LogicException;
-use Watamelo\ApplicationComponent;
-use WatameloApp\Utils\ViewFormatter;
+use Yosko\Watamelo\ApplicationComponent;
+use Yosko\WataBread\ViewFormatter;
 
 class BreadView extends ApplicationComponent
 {
