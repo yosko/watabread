@@ -4,7 +4,8 @@
     "type": "library",
     "require": {
         "yosko/watamelo": "dev-master",
-        "yosko/sql-generator": "dev-main"
+        "yosko/sql-generator": "dev-main",
+        "yosko/view-formatter": "dev-main"
     },
     "require-dev": {
         "yosko/easydump": "dev-master"
@@ -27,6 +28,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/yosko/sql-generator.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/yosko/view-formatter.git"
         }
     ]
 }
