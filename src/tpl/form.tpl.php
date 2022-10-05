@@ -1,6 +1,6 @@
 <?php
 
-use Watamelo\Managers\DataManager;
+use Yosko\WataBread\BreadManager;
 
 $model = $formInstance->getClassName();
 if(!empty($instance)) {
@@ -33,7 +33,7 @@ include $templatePath.'general/header.tpl.php';
 
 
                         switch ($dataView->getPropertyType($formInstance, $name)) {
-                            case DataManager::TYPE_INT:
+                            case BreadManager::TYPE_INT:
                                 if (isset($foreignKeys[$name])) {
                                     include $templatePath . 'data/formFields/dropdown.tpl.php';
                                 } else {
@@ -41,32 +41,32 @@ include $templatePath.'general/header.tpl.php';
                                 }
                                 break;
 
-                            case DataManager::TYPE_FLOAT:
-                            case DataManager::TYPE_MONEY:
+                            case BreadManager::TYPE_FLOAT:
+                            case BreadManager::TYPE_MONEY:
                                 include $templatePath . 'data/formFields/float.tpl.php';
                                 break;
 
-                            case DataManager::TYPE_TEXT:
+                            case BreadManager::TYPE_TEXT:
                                 include $templatePath . 'data/formFields/text.tpl.php';
                                 break;
 
-                            case DataManager::TYPE_TEXT_MULTI:
+                            case BreadManager::TYPE_TEXT_MULTI:
                                 include $templatePath . 'data/formFields/multiline.tpl.php';
                                 break;
 
-                            case DataManager::TYPE_BOOL:
+                            case BreadManager::TYPE_BOOL:
                                 include $templatePath . 'data/formFields/boolean.tpl.php';
                                 break;
 
-                            case DataManager::TYPE_DATE:
+                            case BreadManager::TYPE_DATE:
                                 include $templatePath . 'data/formFields/date.tpl.php';
                                 break;
 
-                            case DataManager::TYPE_DATETIME:
+                            case BreadManager::TYPE_DATETIME:
                                 include $templatePath . 'data/formFields/datetime.tpl.php';
                                 break;
 
-                            case DataManager::TYPE_PASSWORD:
+                            case BreadManager::TYPE_PASSWORD:
                                 include $templatePath . 'data/formFields/password.tpl.php';
                                 break;
 

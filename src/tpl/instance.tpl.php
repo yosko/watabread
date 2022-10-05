@@ -1,6 +1,6 @@
 <?php /** @noinspection PhpUndefinedVariableInspection */
 
-use Watamelo\Managers\DataManager;
+use Yosko\WataBread\BreadManager;
 
 $model = $instance->getClassName();
 $context = $model;
@@ -14,10 +14,10 @@ include $templatePath.'general/header.tpl.php';
         </header>
         <dl><?php
         foreach ($instance as $name => $value) {
-            if ($dataView->isPropertyReadable($instance, $name) && $dataView->getPropertyType($instance, $name) != DataManager::TYPE_PASSWORD) { ?>
+            if ($dataView->isPropertyReadable($instance, $name) && $dataView->getPropertyType($instance, $name) != BreadManager::TYPE_PASSWORD) { ?>
 
                 <dt><?php echo str_replace('_', ' ', $name); ?></dt>
-                <dd<?php if ($dataView->getPropertyType($instance, $name) == DataManager::TYPE_TEXT_MULTI) { echo ' class="multiline"'; } ?>><?php
+                <dd<?php if ($dataView->getPropertyType($instance, $name) == BreadManager::TYPE_TEXT_MULTI) { echo ' class="multiline"'; } ?>><?php
                     $link = $dataView->getHyperlink($instance, $name);
                     if (!empty($link))
                         echo '<a href="'.$link.'">';

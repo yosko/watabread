@@ -1,9 +1,9 @@
 <?php
-use Watamelo\Managers\DataManager;
+use Yosko\WataBread\BreadManager;
 
 /**
- * display a table of Data elements
- * @param array $data Data elements
+ * display a table of BreadModel elements
+ * @param array $data BreadModel elements
  */
 if (!empty($data)) { ?>
 
@@ -41,7 +41,7 @@ if (!empty($data)) { ?>
         <tr<?php echo $instance->isEven() ? ' class="even"' : ''; ?>><?php
         foreach ($instance as $key => $value) {
             // passwords are hidden
-            if ($dataView->isPropertyReadable($instance, $key) && $dataView->getPropertyType($instance, $key) == DataManager::TYPE_PASSWORD) { ?>
+            if ($dataView->isPropertyReadable($instance, $key) && $dataView->getPropertyType($instance, $key) == BreadManager::TYPE_PASSWORD) { ?>
 
                 <td>*****</td><?php
             } elseif ($dataView->isPropertyReadable($instance, $key) && !$dataView->isPropertySecondary($instance, $key)) {
@@ -49,7 +49,7 @@ if (!empty($data)) { ?>
                 $bgColor = $dataView->getBackgroundColor($instance, $key);
                 $type = $dataView->getPropertyType($instance, $key);
 
-                if ($type == DataManager::TYPE_TEXT_MULTI && !empty($instance->$key) && strlen($instance->$key) > 10)
+                if ($type == BreadManager::TYPE_TEXT_MULTI && !empty($instance->$key) && strlen($instance->$key) > 10)
                     $value = mb_strimwidth($instance->$key, 0, 30, "...");
                 else
                     $value = $dataView->formated($instance, $key);
@@ -67,7 +67,7 @@ if (!empty($data)) { ?>
                     $node->appendChild($linkNode);
                 }
 
-                if ($type == DataManager::TYPE_TEXT_MULTI) {
+                if ($type == BreadManager::TYPE_TEXT_MULTI) {
                     $node->setAttribute('title', $dataView->formated($instance, $key));
                     $node->setAttribute('class', 'multiline');
                 }

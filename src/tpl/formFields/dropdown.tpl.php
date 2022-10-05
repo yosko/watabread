@@ -2,13 +2,13 @@
 /**
  * display a form field for dropdown lists (<select>)
  * @param string $name field name
- * @param Data $formInstance instance of resource
+ * @param BreadModel $formInstance instance of resource
  * @param array $foreignKeys information on foreign keys
  * @param array $foreignData list of foreign items
  * @param bool $setFocus should the field have focus
  */
 
-use Watamelo\Data\Data;
+use Yosko\WataBread\BreadModel;
 
 $fClass = $foreignKeys[$name]['class'];
 ?>

@@ -1,12 +1,12 @@
 <?php
 
-namespace Watamelo\Managers;
+namespace Yosko\WataBread;
 
 use PDO;
 use PDOException;
-use Watamelo\Lib\Application;
-use Watamelo\Lib\Manager;
-use Watamelo\Utils\SqlGenerator;
+use Yosko\Watamelo\AbstractApplication;
+use Yosko\Watamelo\Manager;
+use Yosko\SqlGenerator;
 
 /**
  * Basic manager to handle access to entities stored in SQL databases
@@ -16,7 +16,7 @@ abstract class SqlManager extends Manager
     protected array $tables;
     protected string $prefix;
 
-    public function __construct(Application $app)
+    public function __construct(AbstractApplication $app)
     {
         parent::__construct($app);
 

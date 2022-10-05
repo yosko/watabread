@@ -4,53 +4,53 @@ namespace Yosko\WataBread;
 
 use LogicException;
 use Yosko\Watamelo\ApplicationComponent;
-use Yosko\WataBread\ViewFormatter;
+use Yosko\ViewFormatter;
 
 class BreadView extends ApplicationComponent
 {
 
     /**
-     * DataManager for the given Data class
-     * @param Data $object
-     * @return DataManager
+     * BreadManager for the given BreadModel class
+     * @param BreadModel $object
+     * @return BreadManager
      */
-    protected function getManager(Data $object): DataManager
+    protected function getManager(BreadModel $object): BreadManager
     {
         $manager = $this->app->manager($object::getClassName());
-        if (!($manager instanceof DataManager)) {
-            throw new LogicException('Manager for "' . $object::getClassName() . '" can\'t be used by DataView');
+        if (!($manager instanceof BreadManager)) {
+            throw new LogicException('Manager for "' . $object::getClassName() . '" can\'t be used by BreadView');
         }
         return $manager;
     }
 
     /**
      * Is the given property a defined field coming from DB
-     * @param Data $object
+     * @param BreadModel $object
      * @param string $field
      * @return bool
      */
-    public function isPropertyDefined(Data $object, string $field): bool
+    public function isPropertyDefined(BreadModel $object, string $field): bool
     {
         return $this->getManager($object)->isPropertyDefined($field);
     }
 
     /**
-     * indicates type (DataManager::TYPE_*) for given field
-     * @param Data $object
+     * indicates type (BreadManager::TYPE_*) for given field
+     * @param BreadModel $object
      * @param string $field
      * @return int
      */
-    public function getPropertyType(Data $object, string $field): int
+    public function getPropertyType(BreadModel $object, string $field): int
     {
         return $this->getManager($object)->getPropertyType($field);
     }
 
     /**
      * Determines if instances pre-existed (coming from DB)
-     * @param Data $object
+     * @param BreadModel $object
      * @return bool
      */
-    public function instanceExists(Data $object): bool
+    public function instanceExists(BreadModel $object): bool
     {
         foreach ($this->getManager($object)->getPrimaryKeys() as $pk) {
             if (empty($object->$pk)) {
@@ -63,26 +63,26 @@ class BreadView extends ApplicationComponent
 
     /**
      * Get hidden fields of an object to include un a form
-     * @param Data $object
+     * @param BreadModel $object
      * @return array
      */
-    public function getHidden(Data $object): array
+    public function getHidden(BreadModel $object): array
     {
         return $this->getManager($object)->getNonForeignPrimaryKeys();
     }
 
     /**
      * Determine if a field should be displayed or not (and if it should be an <input type="hidden"> in forms
-     * @param Data $object
+     * @param BreadModel $object
      * @param string $field
      * @return bool
      */
-    public function isHidden(Data $object, string $field): bool
+    public function isHidden(BreadModel $object, string $field): bool
     {
         return in_array($field, $this->getHidden($object));
     }
 
-    public function isPropertyWritable(Data $object, string $field): bool
+    public function isPropertyWritable(BreadModel $object, string $field): bool
     {
         $manager = $this->getManager($object);
         if ($manager->isPropertyDefined('id') && empty($object->id)) {
@@ -92,23 +92,23 @@ class BreadView extends ApplicationComponent
         }
     }
 
-    public function isPropertyReadable(Data $object, string $field): bool
+    public function isPropertyReadable(BreadModel $object, string $field): bool
     {
         return $this->getManager($object)->isReadable($field);
     }
 
-    public function isPropertySecondary(Data $object, string $field): bool
+    public function isPropertySecondary(BreadModel $object, string $field): bool
     {
         return $this->getManager($object)->isPropertySecondary($field);
     }
 
     /**
      * Formats data based on type (used for date formats, currencies, etc.)
-     * @param Data $object
+     * @param BreadModel $object
      * @param string $property property name
      * @return string
      */
-    public function formated(Data $object, string $property): string
+    public function formated(BreadModel $object, string $property): string
     {
         if (is_null($object->$property)) {
             return '';
@@ -134,20 +134,20 @@ class BreadView extends ApplicationComponent
         return $value;
     }
 
-    public function getForegroundColor(Data $object, string $property): string
+    public function getForegroundColor(BreadModel $object, string $property): string
     {
         return $this->getManager($object)->getForegroundColor($object, $property);
     }
 
-    public function getBackgroundColor(Data $object, string $property): string
+    public function getBackgroundColor(BreadModel $object, string $property): string
     {
         return $this->getManager($object)->getBackgroundColor($object, $property);
     }
 
     /**
-     * Give a summary for the given list of Data objects
+     * Give a summary for the given list of BreadModel objects
      * @param array $data
-     * @param string $context class name for context (some collection are displayed in other Data types context)
+     * @param string $context class name for context (some collection are displayed in other BreadModel types context)
      * @return string
      */
     public function getSummary(array $data, string $context): string
@@ -163,11 +163,11 @@ class BreadView extends ApplicationComponent
 
     /**
      * Returns a link to corresponding resource (if there is one)
-     * @param Data $object
+     * @param BreadModel $object
      * @param string $property
      * @return string
      */
-    public function getHyperlink(Data $object, string $property): string
+    public function getHyperlink(BreadModel $object, string $property): string
     {
         $manager = $this->getManager($object);
         if ($manager->isForeignData($property)) {
@@ -190,7 +190,7 @@ class BreadView extends ApplicationComponent
         return $this->app()->view()->buildRoute('data/%s/%s', $model, $additional);
     }
 
-    public function instanceRoute(Data $object, string $action = ''): string
+    public function instanceRoute(BreadModel $object, string $action = ''): string
     {
         $manager = $this->getManager($object);
         $idsStr = $manager->getIdString($object);
@@ -199,10 +199,10 @@ class BreadView extends ApplicationComponent
 
     /**
      * @param string $model
-     * @param Data|null $instance
+     * @param BreadModel|null $instance
      * @return array
      */
-    public function getCustomActions(string $model, Data $instance = null): array
+    public function getCustomActions(string $model, BreadModel $instance = null): array
     {
         $manager = $this->app->manager($model);
         return $manager->getCustomActions($instance);
@@ -235,7 +235,7 @@ class BreadView extends ApplicationComponent
     public function getInstance($model)
     {
         $manager = $this->app->manager($model);
-        $class = $manager->getDataClass();
+        $class = $manager->getModelClass();
         return new $class();
     }
 }

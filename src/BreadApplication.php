@@ -13,13 +13,11 @@ abstract class BreadApplication extends AbstractApplication
      */
     public function initView(string $template, string $rootUrl, bool $ApacheURLRewriting)
     {
-        $view = parent::initView($template, $rootUrl, $ApacheURLRewriting);
+        parent::initView($template, $rootUrl, $ApacheURLRewriting);
 
         // Bread managers encapsulator for the view
         $this->breadView = new BreadView($this);
-        $view->setParam('breadView', $this->breadView);
-
-        return $view;
+        $this->view->setParam('breadView', $this->breadView);
     }
 
     /**

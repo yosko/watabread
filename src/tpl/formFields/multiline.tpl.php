@@ -2,11 +2,11 @@
 /**
  * display a form field for multiline texts
  * @param string $name field name
- * @param Data $formInstance instance of resource
+ * @param BreadModel $formInstance instance of resource
  * @param bool $setFocus should the field have focus
  */
 
-use Watamelo\Data\Data;
+use Yosko\WataBread\BreadModel;
 
 ?>
 <div>

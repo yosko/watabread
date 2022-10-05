@@ -40,14 +40,14 @@ To use it:
 * you must add all the necessary routes to BreadController:
 
 ```xml
-    <route path="data/:string|model:" controller="Bread" action=""/>
-    <route path="data/:string|model:/:string|id:" controller="Bread" action="get"/>
-    <route path="data/:string|model:/:string|id:/edit" controller="Bread" action="form"/>
-    <route path="data/:string|model:/:string|id:/copy" controller="Bread" action="form">
+    <route path="data/:string|model:" controller="\Yosko\WataBread\Bread" action=""/>
+    <route path="data/:string|model:/:string|id:" controller="\Yosko\WataBread\Bread" action="get"/>
+    <route path="data/:string|model:/:string|id:/edit" controller="\Yosko\WataBread\Bread" action="form"/>
+    <route path="data/:string|model:/:string|id:/copy" controller="\Yosko\WataBread\Bread" action="form">
         <additional name="copy" value="true"/>
     </route>
-    <route path="data/:string|model:/:string|id:/delete" controller="Bread" action="delete"/>
-    <route path="data/:string|model:/add" controller="Bread" action="form"/>
+    <route path="data/:string|model:/:string|id:/delete" controller="\Yosko\WataBread\Bread" action="delete"/>
+    <route path="data/:string|model:/add" controller="\Yosko\WataBread\Bread" action="form"/>
 ```
 
 ```\Yosko\WataBread\BreadController```, ```\Yosko\WataBread\BreadView``` and all templates in ```src/tpl/``` will then be used to generate views for all BREAD operations on your entities.

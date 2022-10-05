@@ -3,15 +3,16 @@
 namespace Yosko\WataBread;
 
 use RuntimeException;
+use Yosko\Watamelo\Controller;
 
 /**
- * Generic controller for CRUD actions on data using managers inheriting DataManager
+ * Generic controller for CRUD actions on data using managers inheriting BreadManager
  */
-abstract class BreadController extends Controller
+class BreadController extends Controller
 {
     private function secureModel($model)
     {
-        if (!array_key_exists($model, $this->app()->manager('Data')->getModels())) {
+        if (!array_key_exists($model, $this->app()->manager('\Yosko\WataBread\Bread')->getModels())) {
             throw new RuntimeException("Unauthorized access to model \"" . $model . "\"");
         }
     }
@@ -52,7 +53,7 @@ abstract class BreadController extends Controller
             $instance = null;
 
             // empty instance based on given form data
-            $className = $manager->getDataClass();
+            $className = $manager->getModelClass();
             $formInstance = new $className();
         }
 
@@ -75,11 +76,11 @@ abstract class BreadController extends Controller
                 $type = $manager->getPropertyType($name);
 
                 // as Firefox doesn't support datetime-local type for inputs, for now we use a date one and a time one
-                if ($type == DataManager::TYPE_DATETIME && isset($_POST[$name . 'Date']) && isset($_POST[$name . 'Time'])) {
+                if ($type == BreadManager::TYPE_DATETIME && isset($_POST[$name . 'Date']) && isset($_POST[$name . 'Time'])) {
                     $formInstance->$name = $_POST[$name . 'Date'] . ' ' . $_POST[$name . 'Time'];
 
                     // passwords need to be hashed (and only updated if given a new one
-                } elseif ($type == DataManager::TYPE_PASSWORD) {
+                } elseif ($type == BreadManager::TYPE_PASSWORD) {
                     if (!empty($_POST[$name])) {
                         $formInstance->$name = password_hash($_POST[$name]);
 
@@ -89,17 +90,17 @@ abstract class BreadController extends Controller
                     }
 
                     // foreign keys
-                } elseif ($type == DataManager::TYPE_INT && $manager->isForeignKey($name)) {
+                } elseif ($type == BreadManager::TYPE_INT && $manager->isForeignKey($name)) {
                     if (!empty($_POST[$name]) && is_numeric($_POST[$name])) {
                         $formInstance->$name = $_POST[$name];
                     } else {
                         $formInstance->$name = null;
                     }
 
-                } elseif ($type == DataManager::TYPE_BOOL) {
+                } elseif ($type == BreadManager::TYPE_BOOL) {
                     $formInstance->$name = !empty($_POST[$name]);
 
-                } elseif ($type == DataManager::TYPE_INT || $type == DataManager::TYPE_FLOAT) {
+                } elseif ($type == BreadManager::TYPE_INT || $type == BreadManager::TYPE_FLOAT) {
                     $formInstance->$name = empty($_POST[$name]) ? null : $_POST[$name];
 
                     // other fields

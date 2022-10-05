@@ -9,7 +9,7 @@ use Yosko\SqlGenerator;
  * Advanced BREAD manager
  * Enable the creation on no-code configuration-based managers
  */
-abstract class BreadManager extends BreadBaseManager
+class BreadManager extends BreadBaseManager
 {
     public const TYPE_INT = 1;
     public const TYPE_FLOAT = 2;
@@ -89,7 +89,7 @@ abstract class BreadManager extends BreadBaseManager
         'Intervention' => []
     ];
     /**
-     * @var array correspondence between DataManager types and PDO types
+     * @var array correspondence between BreadManager types and PDO types
      */
     private array $typesToPdo = [
         self::TYPE_INT => PDO::PARAM_INT,
@@ -119,7 +119,7 @@ abstract class BreadManager extends BreadBaseManager
 
     public function getModelChildren(): array
     {
-        $class = call_user_func($this->getDataClass() . "::getClassName");
+        $class = call_user_func($this->getModelClass() . "::getClassName");
         if (empty($this->models[$class]['children'])) {
             return [];
         }
@@ -130,7 +130,7 @@ abstract class BreadManager extends BreadBaseManager
      * Get class used for instances (and for PDO fetch)
      * @return string Class name
      */
-    public function getDataClass(): string
+    public function getModelClass(): string
     {
         return $this->fetchClass;
     }
@@ -197,7 +197,7 @@ abstract class BreadManager extends BreadBaseManager
         return $properties;
     }
 
-    public function getIdString(Data $object): string
+    public function getIdString(BreadModel $object): string
     {
         $pks = $this->getPrimaryKeys();
         $pkValues = [];
@@ -274,7 +274,7 @@ abstract class BreadManager extends BreadBaseManager
         return !empty($this->properties[$property]['secondary']);
     }
 
-    public function getColor(Data $object, string $property, $type = 'foreground'): string
+    public function getColor(BreadModel $object, string $property, $type = 'foreground'): string
     {
         // return '#'.substr(md5($object->$property), 0, 6);
 
@@ -282,7 +282,7 @@ abstract class BreadManager extends BreadBaseManager
             $info = $this->getForeignData($property);
             $name = $info['field'];
             $foreignManager = $this->app()->manager($info['class']);
-            //$class = $foreignManager->getDataClass();
+            //$class = $foreignManager->getModelClass();
 
             // TODO : remove use of id and find another solution
             $idField = 'id' . $info['class'];
@@ -313,12 +313,12 @@ abstract class BreadManager extends BreadBaseManager
         return $this->getForeignDatas()[$property];
     }
 
-    public function getForegroundColor(Data $object, string $property): string
+    public function getForegroundColor(BreadModel $object, string $property): string
     {
         return $this->getColor($object, $property, 'foreground');
     }
 
-    public function getBackgroundColor(Data $object, string $property): string
+    public function getBackgroundColor(BreadModel $object, string $property): string
     {
         return $this->getColor($object, $property, 'background');
     }
@@ -363,9 +363,9 @@ abstract class BreadManager extends BreadBaseManager
 
     /**
      * Delete a row based on an instance (object)
-     * @param Data $instance
+     * @param BreadModel $instance
      */
-    public function deleteInstance(Data $instance)
+    public function deleteInstance(BreadModel $instance)
     {
         $primaryValues = [];
         foreach ($this->getPrimaryKeys() as $primaryKey) {
@@ -375,7 +375,7 @@ abstract class BreadManager extends BreadBaseManager
     }
 
     /**
-     * Give a summary for the given list of Data objects
+     * Give a summary for the given list of BreadModel objects
      * @param array $data
      * @param string $context
      * @return string
@@ -385,7 +385,7 @@ abstract class BreadManager extends BreadBaseManager
         return '';
     }
 
-    public function getCustomActions(Data $instance = null): array
+    public function getCustomActions(BreadModel $instance = null): array
     {
         $actions = [];
         return $actions;
