@@ -188,7 +188,7 @@ Methods you can override in any `BreandManager` to extends its features:
 #### Documentation TODO
 Here is a list of undocumented `BreadManager` features:
 * `$availableFilters`/`getAvailableFilters()`
-* `$models` and especially each model's children
+* Configuration file `BreadModels.json`/`$models` and especially each model's children
 * 
 
 ### Controller/View overlay

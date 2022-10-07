@@ -63,31 +63,12 @@ class BreadManager extends BreadBaseManager
         ],
         */
     ];
-    private array $models = [
-        'Client' => [
-            'children' => ['Promo', 'Commande', 'Paiement']
-        ],
-        'Promo' => [
-            'children' => ['Commande']
-        ],
-        'Matière' => [],
-        'User' => [],
-        'UserLevel' => [],
-        'Commande' => [
-            'children' => ['CommandeDetail', 'Facture']
-        ],
-        'CommandeDetail' => [],
-        'Facture' => [
-            'children' => ['FactureDetail', 'PaiementFacture']
-        ],
-        'FactureDetail' => [],
-        'Paiement' => [
-            'children' => ['PaiementFacture']
-        ],
-        'PaiementFacture' => [],
-        'Statut' => [],
-        'Intervention' => []
-    ];
+
+    /**
+     * @var array stores configuration from the BreadModels.json
+     */
+    private static array $models = [];
+
     /**
      * @var array correspondence between BreadManager types and PDO types
      */
@@ -114,16 +95,22 @@ class BreadManager extends BreadBaseManager
 
     public function getModels(): array
     {
-        return $this->models;
+        // first time: load
+        if (empty(self::$models)) {
+            $configFilePath = '/'.$this->app()->configPath().'/BreadModels.json';
+            self::$models = json_decode($configFilePath, true);
+        }
+        return self::$models;
     }
 
     public function getModelChildren(): array
     {
         $class = call_user_func($this->getModelClass() . "::getClassName");
-        if (empty($this->models[$class]['children'])) {
+        $models = $this->getModels();
+        if (empty($models[$class]['children'])) {
             return [];
         }
-        return $this->models[$class]['children'];
+        return $models[$class]['children'];
     }
 
     /**
