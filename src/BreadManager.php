@@ -2,6 +2,7 @@
 
 namespace Yosko\WataBread;
 
+use LogicException;
 use PDO;
 use Yosko\SqlGenerator;
 
@@ -97,8 +98,11 @@ class BreadManager extends BreadBaseManager
     {
         // first time: load
         if (empty(self::$models)) {
-            $configFilePath = '/'.$this->app()->configPath().'/BreadModels.json';
-            self::$models = json_decode($configFilePath, true);
+            $configFilePath = ROOT.'/'.$this->app()->configPath().'/BreadModels.json';
+            if(file_exists($configFilePath) == false) {
+                throw new LogicException(sprintf('Configuration file "%s" not found', $configFilePath));
+            }
+            self::$models = json_decode(file_get_contents($configFilePath), true);
         }
         return self::$models;
     }
