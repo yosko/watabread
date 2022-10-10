@@ -10,18 +10,18 @@ include $templatePath.'general/header.tpl.php';
 
         <header>
             <h2><?php echo $pageTitle; ?></h2>
-            <?php include $templatePath.'data/nav.tpl.php'; ?>
+            <?php include $pluginTplPath.'nav.tpl.php'; ?>
         </header>
         <dl><?php
         foreach ($instance as $name => $value) {
-            if ($dataView->isPropertyReadable($instance, $name) && $dataView->getPropertyType($instance, $name) != BreadManager::TYPE_PASSWORD) { ?>
+            if ($breadView->isPropertyReadable($instance, $name) && $breadView->getPropertyType($instance, $name) != BreadManager::TYPE_PASSWORD) { ?>
 
                 <dt><?php echo str_replace('_', ' ', $name); ?></dt>
-                <dd<?php if ($dataView->getPropertyType($instance, $name) == BreadManager::TYPE_TEXT_MULTI) { echo ' class="multiline"'; } ?>><?php
-                    $link = $dataView->getHyperlink($instance, $name);
+                <dd<?php if ($breadView->getPropertyType($instance, $name) == BreadManager::TYPE_TEXT_MULTI) { echo ' class="multiline"'; } ?>><?php
+                    $link = $breadView->getHyperlink($instance, $name);
                     if (!empty($link))
                         echo '<a href="'.$link.'">';
-                    echo $dataView->formated($instance, $name);
+                    echo $breadView->formated($instance, $name);
                     if (!empty($link))
                         echo '</a>';
                 ?></dd><?php
@@ -41,10 +41,10 @@ foreach ($childrenData as $model => $data) {
 
     <header>
         <h3><?php echo $model; ?></h3><?php
-        include $templatePath . 'data/nav.tpl.php'; ?>
+        include $pluginTplPath . 'nav.tpl.php'; ?>
 
     </header><?php
-    include $templatePath.'data/collectionTable.tpl.php';
+    include $pluginTplPath.'collectionTable.tpl.php';
 }
 
 include $templatePath.'general/footer.tpl.php';

@@ -3,6 +3,7 @@
 namespace Yosko\WataBread;
 
 use RuntimeException;
+use Yosko\Watamelo\AbstractApplication;
 use Yosko\Watamelo\Controller;
 
 /**
@@ -10,6 +11,15 @@ use Yosko\Watamelo\Controller;
  */
 class BreadController extends Controller
 {
+    protected $pluginTplPath = ROOT . '/vendor/yosko/watabread/src/tpl/';
+
+    public function __construct(AbstractApplication $app)
+    {
+        parent::__construct($app);
+
+        $this->app()->view()->setParam("pluginTplPath", $this->pluginTplPath);
+    }
+
     private function secureModel($model)
     {
         if (!array_key_exists($model, $this->app()->manager('\Yosko\WataBread\Bread')->getModels())) {
@@ -33,7 +43,7 @@ class BreadController extends Controller
 
         $this->app()->view()->setParam("model", $model);
         $this->app()->view()->setParam("data", $data);
-        $this->app()->view()->renderView("data/collection");
+        $this->app()->view()->renderView($this->pluginTplPath . "collection");
     }
 
     public function executeForm()
@@ -140,7 +150,7 @@ class BreadController extends Controller
 
         $this->app()->view()->setParam("instance", $instance);
         $this->app()->view()->setParam("formInstance", $formInstance);
-        $this->app()->view()->renderView("data/form");
+        $this->app()->view()->renderView($this->pluginTplPath . "form");
     }
 
     public function executeGet()
@@ -160,7 +170,7 @@ class BreadController extends Controller
         }
         $this->app()->view()->setParam("childrenData", $childrenData);
 
-        $this->app()->view()->renderView("data/instance");
+        $this->app()->view()->renderView($this->pluginTplPath . "instance");
     }
 
     public function executeDelete()
@@ -192,6 +202,6 @@ class BreadController extends Controller
         }
 
         $this->app()->view()->setParam("instance", $instance);
-        $this->app()->view()->renderView("data/delete");
+        $this->app()->view()->renderView($this->pluginTplPath . "delete");
     }
 }

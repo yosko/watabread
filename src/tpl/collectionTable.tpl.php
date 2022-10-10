@@ -8,14 +8,14 @@ use Yosko\WataBread\BreadManager;
 if (!empty($data)) { ?>
 
 <p class="summary"><?php
-    echo $dataView->getSummary($data, $context);
+    echo $breadView->getSummary($data, $context);
 ?></p>
 <table class="collection">
     <thead>
         <tr><?php
         $firstInstance = reset($data);
         foreach ($firstInstance as $key => $value) {
-            if ($dataView->isPropertyReadable($firstInstance, $key) && !$dataView->isPropertySecondary($firstInstance, $key)) { ?>
+            if ($breadView->isPropertyReadable($firstInstance, $key) && !$breadView->isPropertySecondary($firstInstance, $key)) { ?>
 
                 <th><?php echo str_replace('_', ' ', $key); ?></th><?php
             }
@@ -41,20 +41,20 @@ if (!empty($data)) { ?>
         <tr<?php echo $instance->isEven() ? ' class="even"' : ''; ?>><?php
         foreach ($instance as $key => $value) {
             // passwords are hidden
-            if ($dataView->isPropertyReadable($instance, $key) && $dataView->getPropertyType($instance, $key) == BreadManager::TYPE_PASSWORD) { ?>
+            if ($breadView->isPropertyReadable($instance, $key) && $breadView->getPropertyType($instance, $key) == BreadManager::TYPE_PASSWORD) { ?>
 
                 <td>*****</td><?php
-            } elseif ($dataView->isPropertyReadable($instance, $key) && !$dataView->isPropertySecondary($instance, $key)) {
-                $fgColor = $dataView->getForegroundColor($instance, $key);
-                $bgColor = $dataView->getBackgroundColor($instance, $key);
-                $type = $dataView->getPropertyType($instance, $key);
+            } elseif ($breadView->isPropertyReadable($instance, $key) && !$breadView->isPropertySecondary($instance, $key)) {
+                $fgColor = $breadView->getForegroundColor($instance, $key);
+                $bgColor = $breadView->getBackgroundColor($instance, $key);
+                $type = $breadView->getPropertyType($instance, $key);
 
                 if ($type == BreadManager::TYPE_TEXT_MULTI && !empty($instance->$key) && strlen($instance->$key) > 10)
                     $value = mb_strimwidth($instance->$key, 0, 30, "...");
                 else
-                    $value = $dataView->formated($instance, $key);
+                    $value = $breadView->formated($instance, $key);
 
-                $link = $dataView->getHyperlink($instance, $key);
+                $link = $breadView->getHyperlink($instance, $key);
 
                 $node = $dom->createElement('td');
                 $textNode = $dom->createTextNode($value);
@@ -68,7 +68,7 @@ if (!empty($data)) { ?>
                 }
 
                 if ($type == BreadManager::TYPE_TEXT_MULTI) {
-                    $node->setAttribute('title', $dataView->formated($instance, $key));
+                    $node->setAttribute('title', $breadView->formated($instance, $key));
                     $node->setAttribute('class', 'multiline');
                 }
 
@@ -87,7 +87,7 @@ if (!empty($data)) { ?>
         } ?>
 
             <td class="nowrap">
-                <?php include $templatePath.'data/actions.tpl.php'; ?>
+                <?php include $pluginTplPath.'actions.tpl.php'; ?>
             </td>
         </tr><?php
     } ?>

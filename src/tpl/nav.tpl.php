@@ -3,7 +3,7 @@
 if ($self == 'data/collection') { ?>
 
     <a class="action" href="<?php
-        echo $dataView->modelRoute($model, 'add');
+        echo $breadView->modelRoute($model, 'add');
         if (!empty($queryStringForAdd)) {
             echo '?'.$queryStringForAdd;
         }
@@ -12,14 +12,14 @@ if ($self == 'data/collection') { ?>
 // actions d'instance
 } else { ?>
 
-    <a class="action" href="<?php echo $dataView->modelRoute($model); ?>" title="Retour à la liste de <?php echo $model; ?>"><span class="icon">⬅️</span></a><?php
+    <a class="action" href="<?php echo $breadView->modelRoute($model); ?>" title="Retour à la liste de <?php echo $model; ?>"><span class="icon">⬅️</span></a><?php
 
     if (isset($instance)) {
-        include $templatePath.'data/actions.tpl.php';
+        include $pluginTplPath.'actions.tpl.php';
     }
 }
 
-$navCustomActions = array_merge($navCustomActions ?? [], $dataView->getCustomActions($model, $instance ?? null));
+$navCustomActions = array_merge($navCustomActions ?? [], $breadView->getCustomActions($model, $instance ?? null));
 
 if (!empty($navCustomActions)) {
     foreach ($navCustomActions as $action) {

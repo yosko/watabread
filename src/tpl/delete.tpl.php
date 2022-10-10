@@ -6,7 +6,7 @@ include $templatePath.'general/header.tpl.php';
 
         <header>
             <h2><?php echo $pageTitle; ?></h2>
-            <?php include $templatePath.'data/nav.tpl.php'; ?>
+            <?php include $pluginTplPath.'nav.tpl.php'; ?>
         </header>
         <form method="post" action="">
             <input type="hidden" name="id" id="id" value="<?php echo $instance->id; ?>">

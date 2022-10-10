@@ -13,7 +13,7 @@ include $templatePath.'general/header.tpl.php';
 
         <header>
             <h2><?php echo $pageTitle; ?></h2>
-            <?php include $templatePath.'data/nav.tpl.php'; ?>
+            <?php include $pluginTplPath.'nav.tpl.php'; ?>
         </header>
         <form method="post" action="">
             <fieldset>
@@ -21,53 +21,53 @@ include $templatePath.'general/header.tpl.php';
                 <?php
 
                 if (!empty($instance)) {
-                    foreach ($dataView->getHidden($formInstance) as $name) {
-                        include $templatePath . 'data/formFields/hidden.tpl.php';
+                    foreach ($breadView->getHidden($formInstance) as $name) {
+                        include $pluginTplPath . 'formFields/hidden.tpl.php';
                     }
                 }
 
                 $setFocus = true;
-                $foreignKeys = $dataView->getForeignKeys($model);
+                $foreignKeys = $breadView->getForeignKeys($model);
                 foreach ($formInstance as $name => $value) {
-                    if (!$dataView->isHidden($formInstance, $name) && $dataView->isPropertyWritable($formInstance, $name)) {
+                    if (!$breadView->isHidden($formInstance, $name) && $breadView->isPropertyWritable($formInstance, $name)) {
 
 
-                        switch ($dataView->getPropertyType($formInstance, $name)) {
+                        switch ($breadView->getPropertyType($formInstance, $name)) {
                             case BreadManager::TYPE_INT:
                                 if (isset($foreignKeys[$name])) {
-                                    include $templatePath . 'data/formFields/dropdown.tpl.php';
+                                    include $pluginTplPath . 'formFields/dropdown.tpl.php';
                                 } else {
-                                    include $templatePath . 'data/formFields/integer.tpl.php';
+                                    include $pluginTplPath . 'formFields/integer.tpl.php';
                                 }
                                 break;
 
                             case BreadManager::TYPE_FLOAT:
                             case BreadManager::TYPE_MONEY:
-                                include $templatePath . 'data/formFields/float.tpl.php';
+                                include $pluginTplPath . 'formFields/float.tpl.php';
                                 break;
 
                             case BreadManager::TYPE_TEXT:
-                                include $templatePath . 'data/formFields/text.tpl.php';
+                                include $pluginTplPath . 'formFields/text.tpl.php';
                                 break;
 
                             case BreadManager::TYPE_TEXT_MULTI:
-                                include $templatePath . 'data/formFields/multiline.tpl.php';
+                                include $pluginTplPath . 'formFields/multiline.tpl.php';
                                 break;
 
                             case BreadManager::TYPE_BOOL:
-                                include $templatePath . 'data/formFields/boolean.tpl.php';
+                                include $pluginTplPath . 'formFields/boolean.tpl.php';
                                 break;
 
                             case BreadManager::TYPE_DATE:
-                                include $templatePath . 'data/formFields/date.tpl.php';
+                                include $pluginTplPath . 'formFields/date.tpl.php';
                                 break;
 
                             case BreadManager::TYPE_DATETIME:
-                                include $templatePath . 'data/formFields/datetime.tpl.php';
+                                include $pluginTplPath . 'formFields/datetime.tpl.php';
                                 break;
 
                             case BreadManager::TYPE_PASSWORD:
-                                include $templatePath . 'data/formFields/password.tpl.php';
+                                include $pluginTplPath . 'formFields/password.tpl.php';
                                 break;
 
                             default:
