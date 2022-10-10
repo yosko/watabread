@@ -27,10 +27,10 @@ abstract class SqlManager extends Manager
         $qry = $this->dao->prepare($sql);
         $qry->execute();
         $results = $qry->fetchAll(PDO::FETCH_OBJ);
-
+        
         $this->tables = [];
-        foreach ($results as $result) {
-            $this->tables[substr($result->name, strlen($this->prefix))] = $result->name;
+        foreach ($results as $table) {
+            $this->tables[substr($table->name, strlen($this->prefix))] = $table->name;
         }
     }
 
