@@ -29,7 +29,7 @@ abstract class BreadModel
     {
         $title = strtolower(self::getClassName());
         if ($this->issetId()) {
-            $title .= ' #' . $this->{$property};
+            $title .= ' #' . $this->getId();
         }
         return $title;
     }
