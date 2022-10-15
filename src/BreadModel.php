@@ -27,7 +27,7 @@ abstract class BreadModel
      */
     public function getTitle(): string
     {
-        $title = strtolower(self::getClassName());
+        $title = ucfirst(self::getClassName());
         if ($this->issetId()) {
             $title .= ' #' . $this->getId();
         }

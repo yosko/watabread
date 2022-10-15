@@ -11,7 +11,7 @@ use Yosko\Watamelo\AbstractController;
  */
 class BreadController extends AbstractController
 {
-    protected $pluginTplPath = ROOT . '/vendor/yosko/watabread/src/tpl/';
+    protected $pluginTplPath = 'vendor/yosko/watabread/src/tpl/';
 
     public function __construct(AbstractApplication $app)
     {
@@ -43,7 +43,7 @@ class BreadController extends AbstractController
 
         $this->app()->view()->setParam("model", $model);
         $this->app()->view()->setParam("data", $data);
-        $this->app()->view()->renderView($this->pluginTplPath . "collection");
+        $this->app()->view()->renderView("collection", true, $this->pluginTplPath);
     }
 
     public function executeForm()
@@ -150,7 +150,7 @@ class BreadController extends AbstractController
 
         $this->app()->view()->setParam("instance", $instance);
         $this->app()->view()->setParam("formInstance", $formInstance);
-        $this->app()->view()->renderView($this->pluginTplPath . "form");
+        $this->app()->view()->renderView("form", true, $this->pluginTplPath);
     }
 
     public function executeGet()
@@ -170,7 +170,7 @@ class BreadController extends AbstractController
         }
         $this->app()->view()->setParam("childrenData", $childrenData);
 
-        $this->app()->view()->renderView($this->pluginTplPath . "instance");
+        $this->app()->view()->renderView("instance", true, $this->pluginTplPath);
     }
 
     public function executeDelete()
@@ -202,6 +202,6 @@ class BreadController extends AbstractController
         }
 
         $this->app()->view()->setParam("instance", $instance);
-        $this->app()->view()->renderView($this->pluginTplPath . "delete");
+        $this->app()->view()->renderView("delete", true, $this->pluginTplPath);
     }
 }
