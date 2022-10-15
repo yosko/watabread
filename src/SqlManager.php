@@ -5,13 +5,13 @@ namespace Yosko\WataBread;
 use PDO;
 use PDOException;
 use Yosko\Watamelo\AbstractApplication;
-use Yosko\Watamelo\Manager;
+use Yosko\Watamelo\AbstractManager;
 use Yosko\SqlGenerator;
 
 /**
  * Basic manager to handle access to entities stored in SQL databases
  */
-abstract class SqlManager extends Manager
+abstract class SqlManager extends AbstractManager
 {
     protected array $tables;
     protected string $prefix;

@@ -39,7 +39,7 @@ For the following examples, let's assume we have a database tables:
 This one can be used alone.
 
 To use it:
-* your managers should inherit `\Yosko\WataBread\BreadManager` instead of `\Yosko\Watamelo\Manager`
+* your managers should inherit `\Yosko\WataBread\BreadManager` instead of `\Yosko\Watamelo\AbstractManager`
 * your entities (models) should inherit `\Yosko\WataBread\BreadModel` (no equivalent in Watamelo)
 * you must configure your models and managers
 

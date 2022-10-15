@@ -4,12 +4,12 @@ namespace Yosko\WataBread;
 
 use RuntimeException;
 use Yosko\Watamelo\AbstractApplication;
-use Yosko\Watamelo\Controller;
+use Yosko\Watamelo\AbstractController;
 
 /**
  * Generic controller for CRUD actions on data using managers inheriting BreadManager
  */
-class BreadController extends Controller
+class BreadController extends AbstractController
 {
     protected $pluginTplPath = ROOT . '/vendor/yosko/watabread/src/tpl/';
 
