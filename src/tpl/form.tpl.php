@@ -28,11 +28,15 @@ include $templatePath.'general/header.tpl.php';
 
                 $setFocus = true;
                 $foreignKeys = $breadView->getForeignKeys($model);
-                foreach ($formInstance as $name => $value) {
+                $reflectedProperties = (new \ReflectionClass($formInstance))->getProperties();
+                foreach ($reflectedProperties as $property) {
+                    $name = $property->name;
+                    $value = $formInstance->$name ?? null;
+
                     if (!$breadView->isHidden($formInstance, $name) && $breadView->isPropertyWritable($formInstance, $name)) {
 
-
-                        switch ($breadView->getPropertyType($formInstance, $name)) {
+                        $type = $breadView->getPropertyType($formInstance, $name);
+                        switch ($type) {
                             case BreadManager::TYPE_INT:
                                 if (isset($foreignKeys[$name])) {
                                     include $pluginTplPath . 'formFields/dropdown.tpl.php';
@@ -52,6 +56,12 @@ include $templatePath.'general/header.tpl.php';
 
                             case BreadManager::TYPE_TEXT_MULTI:
                                 include $pluginTplPath . 'formFields/multiline.tpl.php';
+                                break;
+
+                            case BreadManager::TYPE_TEXT_LIST:
+                                // TODO: handle properly this case with a dropdown
+                                d($name, $value, 'UNHANDLED FIELD');
+                                //include $pluginTplPath . 'formFields/dropdown.tpl.php';
                                 break;
 
                             case BreadManager::TYPE_BOOL:
