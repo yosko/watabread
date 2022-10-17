@@ -33,7 +33,6 @@ class BreadController extends AbstractController
         $this->secureModel($model);
         $manager = $this->app()->manager($model);
 
-        // $this->parameters['get']
         foreach ($manager->getAvailableFilters() as $name => $filterInfo) {
             if (!empty($this->parameters['get'][$name])) {
                 $manager->filters[$name] = $this->parameters['get'][$name];
@@ -72,9 +71,11 @@ class BreadController extends AbstractController
         } else {
             $instance = null;
             $properties = $manager->getInsertProperties();
-            foreach ($this->parameters['get'] as $getParam => $getValue) {
-                if (in_array($getParam, $properties)) {
-                    $formInstance->$getParam = $getValue;
+            if (isset($this->parameters['get'])) {
+                foreach ($this->parameters['get'] as $getParam => $getValue) {
+                    if (in_array($getParam, $properties)) {
+                        $formInstance->$getParam = $getValue;
+                    }
                 }
             }
         }

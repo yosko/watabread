@@ -1,6 +1,6 @@
 <nav><?php
 // actions de collection
-if ($self == 'data/collection') { ?>
+if ($self == 'collection') { ?>
 
     <a class="action" href="<?php
         echo $breadView->modelRoute($model, 'add');

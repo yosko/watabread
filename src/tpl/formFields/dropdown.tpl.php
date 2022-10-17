@@ -24,7 +24,7 @@ $fClass = $foreignKeys[$name]['class'];
         ?>
 
         <option value="<?php echo $id; ?>"<?php
-        if ($formInstance->$name == $id) {
+        if (isset($formInstance->$name) && $formInstance->$name == $id) {
             echo ' selected';
         } ?>><?php echo $foreignInstance->getTitle(); ?></option><?php
     } ?>

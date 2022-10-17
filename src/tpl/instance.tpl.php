@@ -32,7 +32,7 @@ include $templatePath.'general/header.tpl.php';
         </dl>
 
 <?php
-$self = 'data/collection';
+$self = 'collection';
 $mainModel = $model;
 $mainInstance = $instance;
 foreach ($childrenData as $model => $data) {
