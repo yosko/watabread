@@ -21,6 +21,7 @@ class BreadManager extends BreadBaseManager
     public const TYPE_DATETIME = 7;
     public const TYPE_PASSWORD = 8;
     public const TYPE_MONEY = 10;
+    public const TYPE_TEXT_LIST = 11;
     /**
      * @var string class used for PDO::FETCH_CLASS
      */
@@ -54,7 +55,7 @@ class BreadManager extends BreadBaseManager
                 'key' => 'id', // corresponding field in foreign table
                 'fields' => ['name' => 'nom_client'] // fields to retrieve for display instead of the foreign key
             ],
-            'foreign' => [ // is a foreign field retrieved through a join (should not be used if 'foreignKey' is
+            'foreign' => [ // is a foreign field retrieved through a join (should not be used if 'foreignKey' is used on this property
                 'class' => 'Client', // corresponding foreign table
                 'field' => 'name' // corresponding name of field in foreign table
             ],
@@ -82,7 +83,8 @@ class BreadManager extends BreadBaseManager
         self::TYPE_DATE => PDO::PARAM_STR,
         self::TYPE_DATETIME => PDO::PARAM_STR,
         self::TYPE_PASSWORD => PDO::PARAM_STR,
-        self::TYPE_MONEY => PDO::PARAM_STR
+        self::TYPE_MONEY => PDO::PARAM_STR,
+        self::TYPE_TEXT_LIST => PDO::PARAM_STR
     ];
 
     /**
