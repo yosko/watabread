@@ -114,6 +114,9 @@ class BreadController extends AbstractController
                 } elseif ($type == BreadManager::TYPE_INT || $type == BreadManager::TYPE_FLOAT) {
                     $formInstance->$name = empty($_POST[$name]) ? null : $_POST[$name];
 
+                } elseif ($type == BreadManager::TYPE_MONEY_CENTS) {
+                    $formInstance->$name = empty($_POST[$name]) ? null : round($_POST[$name] * 100);
+
                     // other fields
                 } elseif (isset($_POST[$name])) {
                     $formInstance->$name = $_POST[$name];
