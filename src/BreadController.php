@@ -135,7 +135,7 @@ class BreadController extends AbstractController
                 if ($result === false) {
                     $errors['unhandled'] = true;
                 } else {
-                    header('Location: ' . $this->app()->view()->buildRoute('data/%s/', $model /*, $result*/));
+                    header('Location: ' . $this->app()->view()->buildRoute('data/%s/%s', $model , $result));
                     exit;
                 }
             }

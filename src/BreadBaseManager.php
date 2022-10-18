@@ -263,11 +263,11 @@ abstract class BreadBaseManager extends SqlManager
      * Update an existing row
      * @param object $values row data (including id)
      * @param bool $useTransaction whether to use a transaction or not
-     * @return bool success or error
+     * @return false|string id of updated element or false on error
      */
     public function update(object $values, bool $useTransaction = true)
     {
-        return (bool)$this->set($values, self::SET_FOR_UPDATE, $useTransaction);
+        return $this->set($values, self::SET_FOR_UPDATE, $useTransaction);
     }
 
     /**
@@ -368,7 +368,9 @@ abstract class BreadBaseManager extends SqlManager
             $values = $this->preSet($values, $isUpdate);
             $result = $qry->execute();
 
-            if (!$isUpdate) {
+            if ($isUpdate) {
+                $result = $values->id;
+            } else {
                 $values->id = $this->dao->lastInsertId();
                 $result = $values->id;
             }
