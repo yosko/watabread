@@ -14,7 +14,11 @@ if (!empty($data)) { ?>
     <thead>
         <tr><?php
         $firstInstance = reset($data);
-        foreach ($firstInstance as $key => $value) {
+        $reflectedProperties = (new \ReflectionClass($firstInstance))->getProperties();
+        foreach ($reflectedProperties as $property) {
+            $key = $property->name;
+            $value = $firstInstance->$key ?? null;
+        //foreach ($firstInstance as $key => $value) {
             if ($breadView->isPropertyReadable($firstInstance, $key) && !$breadView->isPropertySecondary($firstInstance, $key)) { ?>
 
                 <th><?php echo str_replace('_', ' ', $key); ?></th><?php
@@ -39,7 +43,11 @@ if (!empty($data)) { ?>
         ?>
 
         <tr<?php echo $instance->isEven() ? ' class="even"' : ''; ?>><?php
-        foreach ($instance as $key => $value) {
+        $reflectedProperties = (new \ReflectionClass($instance))->getProperties();
+        foreach ($reflectedProperties as $property) {
+            $key = $property->name;
+            $value = $instance->$key ?? null;
+        //foreach ($instance as $key => $value) {
             // passwords are hidden
             if ($breadView->isPropertyReadable($instance, $key) && $breadView->getPropertyType($instance, $key) == BreadManager::TYPE_PASSWORD) { ?>
 

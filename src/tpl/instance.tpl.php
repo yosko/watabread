@@ -13,7 +13,11 @@ include $templatePath.'general/header.tpl.php';
             <?php include $pluginTplPath.'nav.tpl.php'; ?>
         </header>
         <dl><?php
-        foreach ($instance as $name => $value) {
+        $reflectedProperties = (new \ReflectionClass($instance))->getProperties();
+        foreach ($reflectedProperties as $property) {
+            $name = $property->name;
+            $value = $instance->$name ?? null;
+        //foreach ($instance as $name => $value) {
             if ($breadView->isPropertyReadable($instance, $name) && $breadView->getPropertyType($instance, $name) != BreadManager::TYPE_PASSWORD) { ?>
 
                 <dt><?php echo str_replace('_', ' ', $name); ?></dt>
