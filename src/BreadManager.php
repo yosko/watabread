@@ -22,6 +22,7 @@ class BreadManager extends BreadBaseManager
     public const TYPE_PASSWORD = 8;
     public const TYPE_MONEY = 10;
     public const TYPE_TEXT_LIST = 11;
+    public const TYPE_MONEY_CENTS = 12;
     /**
      * @var string class used for PDO::FETCH_CLASS
      */
@@ -84,7 +85,8 @@ class BreadManager extends BreadBaseManager
         self::TYPE_DATETIME => PDO::PARAM_STR,
         self::TYPE_PASSWORD => PDO::PARAM_STR,
         self::TYPE_MONEY => PDO::PARAM_STR,
-        self::TYPE_TEXT_LIST => PDO::PARAM_STR
+        self::TYPE_TEXT_LIST => PDO::PARAM_STR,
+        self::TYPE_MONEY_CENTS => PDO::PARAM_INT
     ];
 
     /**

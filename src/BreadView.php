@@ -124,6 +124,8 @@ class BreadView extends AbstractComponent
                 break;
             case $manager::TYPE_MONEY:
                 $value = ViewFormatter::formatCurrency($object->$property);
+            case $manager::TYPE_MONEY_CENTS:
+                $value = ViewFormatter::formatCurrency($object->$property / 100);
                 break;
             case $manager::TYPE_BOOL:
                 $value = $object->$property ? 'Oui' : 'Non';

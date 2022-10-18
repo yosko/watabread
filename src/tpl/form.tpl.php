@@ -47,6 +47,7 @@ include $templatePath.'general/header.tpl.php';
 
                             case BreadManager::TYPE_FLOAT:
                             case BreadManager::TYPE_MONEY:
+                            case BreadManager::TYPE_MONEY_CENTS:
                                 include $pluginTplPath . 'formFields/float.tpl.php';
                                 break;
 
