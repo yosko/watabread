@@ -251,21 +251,23 @@ abstract class BreadBaseManager extends SqlManager
     /**
      * Add a new row to the database
      * @param object $values row data (if present, id will be removed)
+     * @param bool $useTransaction whether to use a transaction or not
      * @return false|string id of newly inserted row or false on error
      */
-    public function add(object $values)
+    public function add(object $values, bool $useTransaction = true)
     {
-        return $this->set($values, self::SET_FOR_INSERT);
+        return $this->set($values, self::SET_FOR_INSERT, $useTransaction);
     }
 
     /**
      * Update an existing row
      * @param object $values row data (including id)
+     * @param bool $useTransaction whether to use a transaction or not
      * @return bool success or error
      */
-    public function update(object $values)
+    public function update(object $values, bool $useTransaction = true)
     {
-        return (bool)$this->set($values, self::SET_FOR_UPDATE);
+        return (bool)$this->set($values, self::SET_FOR_UPDATE, $useTransaction);
     }
 
     /**
@@ -322,9 +324,10 @@ abstract class BreadBaseManager extends SqlManager
      * @param object $values row data
      * @param int $flag indicates if the insert/update explicitely (SET_FOR_INSERT / SET_FOR_UPDATE) or
      * based on an id presence (by default: SET_BY_ID)
+     * @param bool $useTransaction whether to use a transaction or not
      * @return false|string id of newly inserted row or false on error (TODO : what happens for an update?)
      */
-    protected function set(object $values, int $flag = self::SET_BY_ID)
+    protected function set(object $values, int $flag = self::SET_BY_ID, bool $useTransaction = true)
     {
         if ($flag == self::SET_BY_ID) {
             $isUpdate = isset($values->id) && $values->id !== false;
@@ -358,7 +361,9 @@ abstract class BreadBaseManager extends SqlManager
          * EXECUTE
          */
 
-        $this->dao->beginTransaction();
+        if ($useTransaction) {
+            $this->dao->beginTransaction();
+        }
         try {
             $values = $this->preSet($values, $isUpdate);
             $result = $qry->execute();
@@ -370,10 +375,15 @@ abstract class BreadBaseManager extends SqlManager
 
             $this->postSet($values, $isUpdate);
 
-            $this->dao->commit();
+            if ($useTransaction) {
+                $this->dao->commit();
+            }
 
         } catch (PDOException $e) {
-            $this->dao->rollback();
+            // TODO: display/return exception?
+            if ($useTransaction) {
+                $this->dao->rollback();
+            }
             return false;
         }
 
