@@ -446,7 +446,7 @@ class BreadManager extends BreadBaseManager
         foreach ($fields as $field) {
             if ($this->isRequired($field)) {
                 //TODO:
-            } elseif ($values->$field == '') {
+            } elseif ($values->$field === '') {
                 $values->$field = null;
             }
         }
