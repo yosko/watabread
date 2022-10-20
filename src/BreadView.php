@@ -110,30 +110,40 @@ class BreadView extends AbstractComponent
      */
     public function formated(BreadModel $object, string $property): string
     {
-        if (is_null($object->$property)) {
+        return formatedType($object->$property, $this->getPropertyType($object, $property));
+    }
+
+    /**
+     * Formats data based on type (used for date formats, currencies, etc.)
+     * @param mixed $value data
+     * @param int $type BreadManager::TYPE_* constant
+     * @return string
+     */
+    public function formatedType($value, int $type = BreadManager::TYPE_TEXT)
+    {
+        if (is_null($value)) {
             return '';
         }
 
-        $manager = $this->getManager($object);
-        switch ($this->getPropertyType($object, $property)) {
-            case $manager::TYPE_DATE:
-                $value = ViewFormatter::formatDate($object->$property);
+        switch ($type) {
+            case BreadManager::TYPE_DATE:
+                $output = ViewFormatter::formatDate($value);
                 break;
-            case $manager::TYPE_DATETIME:
-                $value = ViewFormatter::formatDateTime($object->$property);
+            case BreadManager::TYPE_DATETIME:
+                $output = ViewFormatter::formatDateTime($value);
                 break;
-            case $manager::TYPE_MONEY:
-                $value = ViewFormatter::formatCurrency($object->$property);
-            case $manager::TYPE_MONEY_CENTS:
-                $value = ViewFormatter::formatCurrency($object->$property / 100);
+            case BreadManager::TYPE_MONEY:
+                $output = ViewFormatter::formatCurrency($value);
+            case BreadManager::TYPE_MONEY_CENTS:
+                $output = ViewFormatter::formatCurrency($value / 100);
                 break;
-            case $manager::TYPE_BOOL:
-                $value = $object->$property ? 'Oui' : 'Non';
+            case BreadManager::TYPE_BOOL:
+                $output = $value ? 'Oui' : 'Non';
                 break;
             default:
-                $value = $object->$property;
+                $output = $value;
         }
-        return $value;
+        return $output;
     }
 
     public function getForegroundColor(BreadModel $object, string $property): string
