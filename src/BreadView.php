@@ -134,6 +134,7 @@ class BreadView extends AbstractComponent
                 break;
             case BreadManager::TYPE_MONEY:
                 $output = ViewFormatter::formatCurrency($value);
+                break;
             case BreadManager::TYPE_MONEY_CENTS:
                 $output = ViewFormatter::formatCurrency($value / 100);
                 break;
@@ -143,6 +144,7 @@ class BreadView extends AbstractComponent
             default:
                 $output = $value;
         }
+
         return $output;
     }
 
