@@ -12,6 +12,7 @@ use Yosko\Watamelo\AbstractController;
 class BreadController extends AbstractController
 {
     public const TEMPLATE_PATH = 'vendor/yosko/watabread/src/tpl/';
+    public const ITEMS_PER_PAGE = 50;
 
     public function __construct(AbstractApplication $app)
     {
@@ -30,6 +31,8 @@ class BreadController extends AbstractController
     public function executeIndex()
     {
         $model = $this->parameters['model'];
+        $this->app()->view()->setParam("model", $model);
+
         $this->secureModel($model);
         $manager = $this->app()->manager($model);
 
@@ -39,9 +42,14 @@ class BreadController extends AbstractController
             }
         }
         $data = $manager->getList(false);
-
-        $this->app()->view()->setParam("model", $model);
         $this->app()->view()->setParam("data", $data);
+        // TODO: only retreive current page data but build summary information
+
+        $page = $this->parameters['get']['page'] ?? 1;
+        $this->app()->view()->setParam("page", $page);
+        $this->app()->view()->setParam("lastPage", ceil(count($data)/static::ITEMS_PER_PAGE));
+        $this->app()->view()->setParam("itemsPerPage", static::ITEMS_PER_PAGE);
+
         $this->app()->view()->renderView("collection", true, self::TEMPLATE_PATH);
     }
 

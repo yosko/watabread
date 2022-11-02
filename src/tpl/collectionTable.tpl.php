@@ -29,7 +29,15 @@ if (!empty($data)) { ?>
         </tr>
     </thead>
     <tbody><?php
-    foreach ($data as $instance) {
+
+    // in a paginated context, only display items for the given page
+    if (isset($page) && isset($itemsPerPage)) {
+        $pageData = array_slice($data, $itemsPerPage * ($page-1), $itemsPerPage, true);
+    } else {
+        $pageData = $data;
+    }
+
+    foreach ($pageData as $instance) {
         /*
         $row = $dom->createElement('tr');
         if ($instance->isEven())

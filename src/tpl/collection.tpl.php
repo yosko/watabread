@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Liste de ' . count($data) . ' ' . $model;
+$pageTitle = sprintf('Liste de %s %s - page %u/%u', count($data), $model, $page, $lastPage);
 $context = $model;
 
 // TODO: remove dependency to this structure/naming
