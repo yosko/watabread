@@ -10,6 +10,9 @@ if (!empty($data)) { ?>
 <p class="summary"><?php
     echo $breadView->getSummary($data, $context);
 ?></p>
+
+<?php include $pluginTplPath.'pagination.tpl.php'; ?>
+
 <table class="collection">
     <thead>
         <tr><?php
@@ -70,4 +73,5 @@ if (!empty($data)) { ?>
 
     </tbody>
 </table><?php
+include $pluginTplPath.'pagination.tpl.php';
 } ?>

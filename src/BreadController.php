@@ -2,6 +2,7 @@
 
 namespace Yosko\WataBread;
 
+use App\Utils\Tools;
 use RuntimeException;
 use Yosko\Watamelo\AbstractApplication;
 use Yosko\Watamelo\AbstractController;
@@ -44,11 +45,19 @@ class BreadController extends AbstractController
         $data = $manager->getList(false);
         $this->app()->view()->setParam("data", $data);
         // TODO: only retreive current page data but build summary information
+        $quantity = count($data);
 
         $page = $this->parameters['get']['page'] ?? 1;
         $this->app()->view()->setParam("page", $page);
-        $this->app()->view()->setParam("lastPage", ceil(count($data)/static::ITEMS_PER_PAGE));
+        $this->app()->view()->setParam("lastPage", ceil($quantity/static::ITEMS_PER_PAGE));
         $this->app()->view()->setParam("itemsPerPage", static::ITEMS_PER_PAGE);
+
+        $pagination = Tools::generatePagination($page, 0, static::ITEMS_PER_PAGE, $quantity);
+        $this->app()->view()->setParam("pagination", $pagination);
+
+        $paginationUrl = $this->app()->view()->buildRoute('data/%s?page=', $model);
+        $this->app()->view()->setParam("paginationUrl", $paginationUrl);
+
 
         $this->app()->view()->renderView("collection", true, self::TEMPLATE_PATH);
     }
