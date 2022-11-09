@@ -406,7 +406,7 @@ class BreadManager extends BreadBaseManager
             $qry->leftJoin(
                 $foreignManager->getTableName(),
                 $foreignManager->getTableAlias(),
-                $foreignManager->getTableAlias() . '.' . $infos['key'] . ' = ' . $this->tableAlias . '.' . $foreignKey,
+                $foreignManager->getTableAlias() . '.' . $infos['key'] . ' = ' . ($infos['alias'] ?? $this->tableAlias) . '.' . $foreignKey,
                 $isCount ? [] : $fields
             );
         }
