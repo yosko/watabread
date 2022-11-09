@@ -24,6 +24,9 @@ include $templatePath . 'general/header.tpl.php';
 
                 $foreignData[$filter['class']] = $filter['data'];
                 include $pluginTplPath . 'formFields/dropdown.tpl.php';
+            } elseif ($filter['source'] == 'text') {
+                $setFocus = false;
+                include $pluginTplPath . 'formFields/text.tpl.php';
             }
         } ?>
 
