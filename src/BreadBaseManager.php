@@ -33,6 +33,7 @@ abstract class BreadBaseManager extends SqlManager
     public int $offset;
     public array $orderBy;
     public bool $performCount;
+    public string $resultKey;
 
     /**
      * Initialize settings for the next query
@@ -41,12 +42,13 @@ abstract class BreadBaseManager extends SqlManager
      * @param array $orderBy sort order (key: field, value: asc|desc
      * @param bool $performCount perform a count instead of a regular select
      */
-    public function setListParams($quantity = 0, $offset = 0, $orderBy = array(), $performCount = false)
+    public function setListParams($quantity = 0, $offset = 0, $orderBy = [], $performCount = false, string $resultKey = 'id')
     {
         $this->quantity = $quantity;
         $this->offset = $offset;
         $this->orderBy = $orderBy;
         $this->performCount = $performCount;
+        $this->resultKey = $resultKey;
     }
 
     /**
@@ -124,10 +126,11 @@ abstract class BreadBaseManager extends SqlManager
         );
 
         // result has an id: use it as array keys
-        if (is_array($rows) && isset(current($rows)->id)) {
+        $resultKey = $this->resultKey;
+        if (is_array($rows) && isset(current($rows)->$resultKey)) {
             $result = array();
             foreach ($rows as $row) {
-                $result[$row->id] = $row;
+                $result[$row->$resultKey] = $row;
             }
         } else {
             $result = $rows;
